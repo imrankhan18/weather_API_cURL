@@ -32,7 +32,7 @@ if (isset($data))
     <div>Wind inkph:-<b>' . $data['current']['wind_kph'] . '</b></div>
     </div>
   </div>';
-  } elseif ($_GET['action'] == 'forecast' && $_GET['aqi'] == 'yes') {
+  } elseif ($_GET['action'] == 'forecast' && $_GET['action'] == '&aqi=yes') {
     $disp = "";
     $disp.='<h1>Air Quality</h1>';
 
