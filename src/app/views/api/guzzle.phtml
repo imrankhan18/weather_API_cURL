@@ -1,0 +1,39 @@
+<link href="https://fonts.googleapis.com/css?family=Bentham|Playfair+Display|Raleway:400,500|Suranna|Trocchi" rel="stylesheet">
+<?php
+if (isset($guz)) {
+    $disp = '';
+    $disp .= "<h1 style='text-align:center;'>All books</h2>";
+    for ($i = 0; $i < count($guz); $i++) {
+        // echo "<pre>";
+        // print_r($guz[$i]);
+        // echo "</pre>";
+        // die;
+        $disp .= "<div class='col-4'>
+      <div class='card shadow-sm'>
+          <img src='https://covers.openlibrary.org/b/id/" . $guz[$i]->cover_i . "-M.jpg' alt='pic'  width='35%'  height='50%'>
+        <div class='card-body'>
+        
+            <a href='book?isbn=";
+            
+            $disp.= $guz[$i]->isbn[0]??'';
+            
+            $disp.="'><strong>Title:" . $guz[$i]->title. "</strong></a>
+          <p class='card-text'>by <strong>" . $guz[$i]->author_name[0] . "</strong></p>
+          <div class='d-flex justify-content-between align-items-center'>
+            <p name='' >Total Edition <strong>" . $guz[$i]->edition_count . "</strong>&nbsp;</p>
+          </div>
+          <div class='d-flex justify-content-between align-items-center'>
+            <p><strong></strong>&nbsp;</p>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>";
+    }
+
+    echo $disp;
+}
+
+
+?>

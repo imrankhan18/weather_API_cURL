@@ -1,0 +1,39 @@
+<?php
+
+
+// die;
+if (isset($message)) {
+?>
+<h2 style="text-align:center">Locations</h2>
+
+<table class="table table-bordered table-hover">
+  <thead class="thead-light">
+    <tr>
+      <th>Location</th>
+    </tr>
+  </thead>
+  <tfoot>
+    <tr>
+      <td colspan="3">Total Results : <?php echo count($message); ?></td>
+    </tr>
+  </tfoot>
+  <tbody>
+    <?php foreach ($message as $loc) {
+    ?>
+      <tr>
+        <td><?php echo '<a href="/api/details?alt='.$loc['lat'].','.$loc['lon'].'"> '?>
+        <?php echo $loc['name'], "<br>" . $loc['country']; '</a>'?>
+        </td>
+      </tr>
+
+    <?php
+    }
+  }  ?>
+  </tbody>
+</table>
+
+<?php 
+echo "<pre>";
+print_r($message);
+echo "</pre>";
+?>

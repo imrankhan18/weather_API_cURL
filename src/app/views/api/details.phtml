@@ -1,0 +1,190 @@
+<?php
+?>
+<h2 style="text-align:center">For Full Details</h2>
+<div class="row">
+  <div class="col">
+    <?php echo '<a class="btn btn-dark text-white" href="/api/details?alt=' . $_GET['alt'] . '&action=current&alert=no">Current Weather</a>' ?>
+    <?php echo '<a class="btn btn-dark text-white" href="/api/details?alt=' . $_GET['alt'] . '&action=forecast&alert=no">Forecast</a>' ?>
+    <?php echo '<a class="btn btn-dark text-white" href="/api/details?alt=' . $_GET['alt'] . '&action=history&alert=no">History</a>' ?>
+    <?php echo '<a class="btn btn-dark text-white" href="/api/details?alt=' . $_GET['alt'] . '&action=timezone&alert=no">Time Zone</a>' ?>
+    <?php echo '<a class="btn btn-dark text-white" href="/api/details?alt=' . $_GET['alt'] . '&action=sports&alert=no">Sports</a>' ?>
+    <?php echo '<a class="btn btn-dark text-white" href="/api/details?alt=' . $_GET['alt'] . '&action=astronomy&alert=no">Astronomy</a>' ?>
+    <?php echo '<a class="btn btn-dark text-white" href="/api/details?alt=' . $_GET['alt'] . '&action=forecast&alert=yes">Weather Alerts</a>' ?>
+    <?php echo '<a class="btn btn-dark text-white" href="/api/details?alt=' . $_GET['alt'] . '&action=forecast&aqi=yes">Air Quality</a>' ?>
+  </div>
+</div>
+<?php
+if (isset($data))
+  if ($_GET['action'] == 'current' || $_GET['action'] == null) {
+
+    $disp = "";
+    $disp.='<h1>Current Weather</h1>';
+
+    $disp .= '<div class="row">
+    <div class="card col-4">
+    <div>City-<b>' . $data['location']['name'] . '</b></div>
+    <div>Region-<b>' . $data['location']['region'] . '</b></div>
+    <div>Country-<b>' . $data['location']['country'] . '</b></div>
+    <div>Local Time Epoc-<b>' . $data['location']['localtime_epoch'] . '</b></div>
+    <div>Temperature in C:-<b>' . $data['current']['temp_c'] . '</b></div>
+    <div>Temperature in F:-<b>' . $data['current']['temp_f'] . '</b></div>
+    <div>Wind in mph:-<b>' . $data['current']['wind_mph'] . '</b></div>
+    <div>Wind inkph:-<b>' . $data['current']['wind_kph'] . '</b></div>
+    </div>
+  </div>';
+  } elseif ($_GET['action'] == 'forecast' && $_GET['aqi'] == 'yes') {
+    $disp = "";
+    $disp.='<h1>Air Quality</h1>';
+
+    $disp .= '<table>
+  <tr>
+  <th>co </th> 
+  <th>no2 </th> 
+  <th>o3 </th> 
+  <th>pm2_5 </th> 
+  <th>pm10 </th> 
+  <th>us-epa-index </th> 
+  <th>gb-defra-index </th> 
+
+  </tr>';
+
+    // foreach ($data['current'] as $k => $v) 
+    {
+      // for($i=0;$i<count($v);$i++)
+      {
+        $disp .= '<tr>
+      <td>' . $data['current']['air_quality']['co'] . '</td>
+      <td>' . $data['current']['air_quality']['no2'] . '</td>
+      <td>' . $data['current']['air_quality']['o3'] . '</td>
+      <td>' . $data['current']['air_quality']['pm2_5'] . '</td>
+      <td>' . $data['current']['air_quality']['pm10'] . '</td>
+      <td>' . $data['current']['air_quality']['us-epa-index'] . '</td>
+      <td>' . $data['current']['air_quality']['gb-defra-index'] . '</td>
+      </tr>';
+      }
+    }
+        $disp .= ' </table>';
+  } elseif ($_GET['action'] == 'forecast' && $_GET['alert'] == 'yes') {
+        $disp = "";
+        $disp.='<h1>Weather Alert</h1>';
+        $disp .= '<table>
+  <tr>
+  <th>Headline</th>
+  <th>Event</th>
+  <th>Effective</th>
+  <th>Expires</th>
+  <th>Description</th>
+  </tr>';
+
+        foreach ($data['alerts']['alert'] as $k => $v) { {
+            $disp .= '<tr>
+      <td>' . $v['headline'] . '</td>
+      <td>' . $v['event'] . '</td>
+      <td>' . $v['effective'] . '</td>
+      <td>' . $v['expires'] . '</td>
+      <td>' . $v['desc'] . '</td>
+      </tr>';
+      }
+      $disp .= ' </table>';
+    }
+        
+  } elseif ($_GET['action'] == 'forecast') {
+        $disp = '';
+        $disp.='<h1>Forecast</h1>';
+        $disp .= '<table>
+    <tr>
+    <th>Date</th>
+    <th>Max Temp in C</th>
+    <th>Min Temp in C</th>
+    <th>Avg Temp in C</th>
+    <th>Avg Temp in F</th>
+    <th>Max wind in ph</th>
+    <th>Max wind in Kph</th>
+    </tr>';
+        foreach ($data['forecast']['forecastday'] as $v) {
+            $disp .= '<tr>
+      <td>' . $v['date'] . '</td>
+      <td>' . $v['day']['maxtemp_c'] . '</td>
+      <td>' . $v['day']['mintemp_c'] . '</td>
+      <td>' . $v['day']['avgtemp_c'] . '</td>
+      <td>' . $v['day']['avgtemp_f'] . '</td>
+      <td>' . $v['day']['maxwind_mph'] . '</td>
+      <td>' . $v['day']['maxwind_kph'] . '</td>
+      </tr>';
+    }
+        $dsip = '</table>';
+  } elseif ($_GET['action'] == 'timezone') {
+        $disp = "";
+        $disp.='<h1>Time Zone</h1>';
+        $disp .= '<div class="row">
+  <div class="card col-4">
+  <div>Latitute-<b>' . $data['location']['lat'] . '</b></div>
+  <div>Longitude-<b>' . $data['location']['lon'] . '</b></div>
+  <div>Region-<b>' . $data['location']['region'] . '</b></div>
+  </div>
+</div>';
+  } elseif ($_GET['action'] == 'sports') {
+        $disp = "";
+        $disp.='<h1>Sports</h1>';
+        $disp .= '<table>
+  <tr>
+  <th>Statdium</th>
+  <th>Country</th>
+  <th>Region</th>
+  <th>Tournament</th>
+  <th>Start</th>
+  <th>Match</th>
+  </tr>';
+
+        foreach ($data as $k => $v) {
+            for ($i = 0; $i < count($v); $i++) {
+                $disp .= '<tr>
+      <td>' . $v[$i]['stadium'] . '</td>
+      <td>' . $v[$i]['country'] . '</td>
+      <td>' . $v[$i]['region'] . '</td>
+      <td>' . $v[$i]['tournament'] . '</td>
+      <td>' . $v[$i]['start'] . '</td>
+      <td>' . $v[$i]['match'] . '</td>
+      </tr>';
+      }
+    }
+        $disp .= ' </table>';
+  } elseif ($_GET['action'] == 'astronomy') {
+        $disp = "";
+        $disp.='<h1>Astronomy</h1>';
+        $disp .= '<table>
+  <tr>
+  <th>sunrise</th>
+  <th>sunset</th>
+  <th>moonrise</th>
+  <th>moonset</th>
+  <th>moon phase</th>
+  <th>Moon illumination</th>
+  </tr>';
+
+        foreach ($data['astronomy'] as $k => $v) {
+      // for($i=0;$i<count($v);$i++)
+            {
+            $disp .= '<tr>
+      <td>' . $v['sunrise'] . '</td>
+      <td>' . $v['sunset'] . '</td>
+      <td>' . $v['moonrise'] . '</td>
+      <td>' . $v['moonset'] . '</td>
+      <td>' . $v['moon_phase'] . '</td>
+      <td>' . $v['moon_illumination'] . '</td>
+      </tr>';
+      }
+    }
+        $disp .= ' </table>';
+  }
+
+
+?>
+
+<?php
+echo $disp;
+
+// echo "<pre>";
+// print_r($data);
+// echo "</pre>";
+?>
