@@ -15,7 +15,7 @@
 </div>
 <?php
 if (isset($data))
-  if ($_GET['action'] == 'current' || $_GET['action'] == null) {
+  if ($_GET['action'] == 'current' || $_GET['action'] == null && $_GET['alert'] == 'no') {
 
     $disp = "";
     $disp.='<h1>Current Weather</h1>';
@@ -32,7 +32,7 @@ if (isset($data))
     <div>Wind inkph:-<b>' . $data['current']['wind_kph'] . '</b></div>
     </div>
   </div>';
-  } elseif ($_GET['action'] == 'forecast' && $_GET['action'] == '&aqi=yes') {
+  } elseif ($_GET['action'] == 'forecast' && $_GET['aqi'] == 'yes') {
     $disp = "";
     $disp.='<h1>Air Quality</h1>';
 
@@ -64,7 +64,7 @@ if (isset($data))
       }
     }
         $disp .= ' </table>';
-  } elseif ($_GET['action'] == 'forecast' && $_GET['alert'] == 'yes') {
+  } elseif ($_GET['action'] == 'forecast' && $_GET['alert'] == 'yes' ) {
         $disp = "";
         $disp.='<h1>Weather Alert</h1>';
         $disp .= '<table>
@@ -88,7 +88,7 @@ if (isset($data))
       $disp .= ' </table>';
     }
         
-  } elseif ($_GET['action'] == 'forecast') {
+  } elseif ($_GET['action'] == 'forecast' && $_GET['alert'] == 'no') {
         $disp = '';
         $disp.='<h1>Forecast</h1>';
         $disp .= '<table>
@@ -149,7 +149,7 @@ if (isset($data))
       }
     }
         $disp .= ' </table>';
-  } elseif ($_GET['action'] == 'astronomy') {
+  } elseif ($_GET['action'] == 'astronomy' && $_GET['alert'] == 'no') {
         $disp = "";
         $disp.='<h1>Astronomy</h1>';
         $disp .= '<table>
